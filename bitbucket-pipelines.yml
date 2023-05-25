@@ -1,0 +1,13 @@
+image: atlassian/default-image:latest
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Deploy to Production
+          script:
+            - apt-get update && apt-get install -y openssh-client
+            - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+            - chmod 600 ~/.ssh/id_rsa
+            - ssh -o StrictHostKeyChecking=no user@production-server "cd /path/to/project && git pull origin master"
+            # Add any additional deployment commands for the production server
