@@ -1,5 +1,6 @@
 image: atlassian/default-image:3
 
+image: atlassian/default-image:3
 pipelines:
   branches:
     master:
@@ -11,4 +12,4 @@ pipelines:
                 script:
                   - echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa
                   - ssh -i ~/.ssh/id_rsa /vivikola.ch/stage.app.vivikola.ch
-                  - rsync -avz --delete /vivikola.ch/stage.app.vivikola.ch
+                  - rsync -avz --delete ./vivikola.ch:/vivikola.ch/stage.app.vivikola.ch
