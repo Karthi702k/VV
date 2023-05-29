@@ -8,7 +8,7 @@ pipelines:
           deployment: test
           script:
             - apt-get update && apt-get install -y openssh-client
-            - echo "$SSH_PRIVATE_KEY1" | base64 -d > ~/.ssh/id_rsa_demotest.pem
-            - chmod 600 ~/.ssh/id_rsa_demotest.pem
-            - ssh -i ~/.ssh/id_rsa_demotest.pem ss4ucrmc@demotest.ss4ucrm.com "cd /home/ss4ucrmc/demotest.ss4ucrm.com && git pull"
+            - echo "$SSH_PRIVATE_KEY1" | base64 -d > ~/.ssh/forlam_server.pem
+            - chmod 600 ~/.ssh/forlam_server.pem
+            - ssh -i "forlam_server.pem" ubuntu@ec2-35-159-2-247.eu-central-1.compute.amazonaws.com "cd /vivikola.ch/stage.app.vivikola.ch && git pull"
             # Add any additional deployment commands for the production server
