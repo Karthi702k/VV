@@ -2,14 +2,16 @@ image: atlassian/default-image:3
 
 pipelines:
   branches:
-    master:
-      - step:
-          name: Deploy to test
-          deployment: test
-          variables:
-             SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
-           script:
-              - apt-get update && apt-get install -y openssh-client
-              - chmod 600 $SSH_PRIVATE_KEY
-              - ssh -i $SSH_PRIVATE_KEY ubuntu@ec2-35-159-2-247.eu-central-1.compute.amazonaws.com "cd /vivikola.ch/stage.app.vivikola.ch && git pull"
+   master:
+    stages:
+      -stage: deploy
+        steps:
+        - step:
+            name: Deploy to test
+            script:
+              - echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa
+              - chmod 600 ~/.ssh/id_rsa
+              - ssh -i ~/.ssh/id_rsa /vivikola.ch/stage.app.vivikola.ch
+              - rsync -avz --delete ./vivikola.ch/stage.app.vivikola.ch
               # Add any additional deployment commands for the production server
+              
