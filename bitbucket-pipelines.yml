@@ -6,9 +6,10 @@ pipelines:
       - step:
           name: Deploy to test
           deployment: test
-          script:
-            - apt-get update && apt-get install -y openssh-client
-            - echo "$SSH_PRIVATE_KEY" > ~/.ssh/forlam_server.pem
-            - chmod 600 ~/.ssh/forlam_server.pem
-            - ssh -i "forlam_server.pem" ubuntu@ec2-35-159-2-247.eu-central-1.compute.amazonaws.com "cd /vivikola.ch/stage.app.vivikola.ch && git pull"
-            # Add any additional deployment commands for the production server
+          variables:
+             SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+           script:
+              - apt-get update && apt-get install -y openssh-client
+              - chmod 600 ~/.ssh/forlam_server.pem
+              - ssh -i "forlam_server.pem" ubuntu@ec2-35-159-2-247.eu-central-1.compute.amazonaws.com "cd /vivikola.ch/stage.app.vivikola.ch && git pull"
+              # Add any additional deployment commands for the production server
