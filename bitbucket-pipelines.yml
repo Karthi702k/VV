@@ -8,7 +8,7 @@ pipelines:
           deployment: test
           script:
             - apt-get update && apt-get install -y openssh-client
-            - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa_demotest.pem
-            - chmod 600 ~/.ssh/id_rsa_demotest.pem
-            - ssh -i ~/.ssh/id_rsa_demotest.pem ss4ucrmc@demotest.ss4ucrm.com "cd /home/ss4ucrmc/demotest.ss4ucrm.com && git pull"
+            - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa_demotest
+            - chmod 600 ~/.ssh/id_rsa_demotest
+            - ssh -i ~/.ssh/id_rsa_demotest ss4ucrmc@demotest.ss4ucrm.com "cd /home/ss4ucrmc/demotest.ss4ucrm.com && git pull"
             # Add any additional deployment commands for the production server
