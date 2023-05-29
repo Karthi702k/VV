@@ -1,13 +1,14 @@
-image: atlassian/default-image:latest
+image: atlassian/default-image:3
 
 pipelines:
   branches:
     master:
       - step:
-          name: Deploy to Production
+          name: Deploy to test
+          deployment: test
           script:
             - apt-get update && apt-get install -y openssh-client
-            - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
-            - chmod 600 ~/.ssh/id_rsa
-            - ssh -o StrictHostKeyChecking=no user@production-server "cd /path/to/project && git pull origin master"
+            - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa_demotest.pem
+            - chmod 600 ~/.ssh/id_rsa_demotest.pem
+            - ssh -i ~/.ssh/id_rsa_demotest.pem ss4ucrmc@demotest.ss4ucrm.com "cd /home/ss4ucrmc/demotest.ss4ucrm.com && git pull"
             # Add any additional deployment commands for the production server
